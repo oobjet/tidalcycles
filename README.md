@@ -1,1 +1,3 @@
 # tidalcycles
+
+> everything tidal
