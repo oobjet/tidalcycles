@@ -55,8 +55,14 @@ let p = streamReplace tidal
     d16 = p 16
 :}
 
-{:
+:{
+-- custom functions
 let rol p = within (0.75 ,1) ((# gain saw).(linger (1/16))) p
     roll p = within (0.5 ,1) ((# gain saw).(linger (1/16))) p
     rolll p = within (0 ,1) ((# gain saw).(linger (1/16))) p
+    linput = pI "linput"
+    lname = pS "lname"
+    dg = degradeBy
+    sb = sometimesBy
+    mute p = (const $ s "~") $ p
 :}
