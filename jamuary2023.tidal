@@ -1,0 +1,114 @@
+-- jamuary 2023
+-- one piece of music per day
+-- https://soundcloud.com/objet/sets/jamuary-2023
+-- made with tidalcycles (https://tidalcycles.org/)
+------------------
+-- 1 - stereopond
+------------------
+
+do
+  -- first mvt -> second mvt -> third mvt -> fourth mvt -> first mvt
+  setcps (130/60/4)
+  resetCycles
+  -- mix automation
+  let mix1 = mask "<t!8 t!8 t!8 t!8 f!8 f!8 f!8 f!8 t!8 t!8 f!8>"
+      mix2 = mask "<f!8 f!8 t!8 t!8 t!8 t!8 f!8 f!8 f!8 f!8 f!8>"
+      mix3 = mask "<f!8 f!8 f!8 f!8 t!8 t!8 t!8 t!8 f!8 f!8 f!8>"
+      mix4 = mask "<f!8 f!8 f!8 f!8 f!8 f!8 t!8 t!8 t!8 t!6 f!8>"
+  -- first movement
+  d1
+    $ mix1
+    $ every 9 roll $ every 7 (#lpf 3000) $ every 10 (# s "ml:2") $ every 24 (jux (# speed 2)) $ every 6 (# room "0 0 0 0 0 0 0.2 0.4") $ every 12 (# speed "2 1 2 -2") $ every 8 (# speed "1 1 1 2") $ splice 8 "0 [1 1] 5 [0 4] <2 7> [5 6] 6 [7 6]" $ s "ml:0" # gain 1.3 # cut 1
+  -- second movement
+  d2
+    $ mix2
+    $ every 10 rolll $ every 24 (# cut 1) $ every 9 (#hpf 3000) $ every 10 (# s "ml:0") $ every 12 (off 0.25 (# room 0.1)) $ every 4 (off 0.125 (# speed "2 2 2 4")) $ every 31 (# gain 0.1) $ splice 6 "[0 0?] 1 [3 3?] 3 " $ s "ml:1" # speed "0.5 1 0.5 1 1 1" # gain 1.1 # cut 2
+  -- third movement
+  d3
+    $ mix3
+    $ every 12 rol $ every 32 (# cut 2) $ every 4 (# gain "1.5 0 0 1.4 0 0 1.3 0") $ every 3 (# lpf (9000 * saw)) $ splice 8 "0 1 2 3 4 5 6 7" $ s "ml:2" # gain 1.2 # resonance 0.3 # cut 3
+  -- fourth movement
+  d4
+    $ mix4
+    $ every 3 (# cut 1) $ every 13 roll $ every 30 (jux rev) $ every 8 (off "0.125 0.25" (# speed 3)) $ splice 8 "0 <6 ~> 0 4 0 2 0 ~" $ s "ml:3" # speed 0.5 # gain 1.3 # legato  "0.2 0.4 0.6 1" # room "0.5 0.3 0.1 0" # hpf 1000
+
+-------------------
+-- 2 - Aluminium --
+-------------------
+
+do
+    setcps (120/120/2)
+    resetCycles
+    d1 -- treble presence
+        $ dg (slow 4 "<0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9>")
+        $ stut' 4 0.125 ((# n "5").(# legato 1). (# speed 2))
+        $ slow 2
+        $ foldEvery [3, 5, 7] (off 0.25 (# crush 2))
+        $ foldEvery [2, 6, 8] (off 0.125 (+ "12"))
+        $ n (scale "minor" $ "c(3,8) a(3,8,2) f(3,8) e(3,8,4)")
+        # sound "op:6"
+        # legato "1 2 4"
+        # gain 0.3
+    d2 -- rythm
+        $ every 14 (jux press.(# lpf "5000 3000 2000 500"))
+        $ mask (slow 16 $ "f!4 t!5")
+        $ off 0.125 (# gain 0.8).(# crush 3).(# pan 0.3)
+        $ s "ak . ~ ak:1 . ~ ak:2 . ak:3 ak:3 <ak:4 ~>"
+        # gain 0.9
+        # lpf (slow 11 $ sine*5000)
+    d3 -- floating melody 1
+        $ every 4 (# vowel "a e u i o")
+        $ mask (slow 34 $ "f!2 t!16")
+        $ up (scale "minor" $ "c(3,8) a(3,8,2)")
+        # s "op:1(3,8)"
+        # gain (1.2 * (slow 16 $ sine))
+        # room 0.5 # orbit 3
+        # pan 0.2
+    d4 -- floating melody 2
+        $ jux (iter 4)
+        $ mask (slow 38 $ "f!3 t!18")
+        $ up (scale "minor" $ "f(3,8) e(3,8,4)")
+        # s "op:1(3,8)"
+        # gain (1.2 * (slow 16 $ (1 - sine)))
+        # room 0.7 # orbit 4
+        # pan 0.8
+    d5 -- hh
+        $ every 19 roll
+        $ every 9 (off 0.125 rev)
+        $ chop 8
+        $ mask (slow 18 $ "f!2 t!4")
+        $ every 3 (stut' 4 0.125 (# speed "1 2 4"))
+        $ slow "8 4 2 1"
+        $ ply "<1 1 1 2>"
+        $ off "<0.125 0.25>" (# speed 2)
+        $ s "ah*4"
+        # gain 0.6
+        # hpf (slow 11 $ cosine*3000)
+
+-------------------
+-- 3 - étude #1 -
+-------------------
+setcps (110/240)
+
+d1 $ sound "pluck:3(5,12)" # cps 0.6 # octer (slow 23 sine) # shape 0.4 # pan 0.5
+
+d2 $ sound "pluck:6(4,12)" # pan 0.4 # octer (slow 17 sine) # shape 0.4 # pan 0
+
+d3 $ sound "drum:8(7,12)" # pan 0.6 # octer (slow 27 sine) # shape 0.4 # pan 1 # room 0.1
+
+d5 $ s "bskick:1(3,8)" # octer (slow 11 sine) # shape 0.4 # pan 0
+
+xfadeIn 1 16 $ sound "pluck:4(9,12)" # pan 1
+
+xfadeIn 2 16 $ sound "pluck:7(10,12)" # pan 0
+
+xfadeIn 3 16 $ sound "drum:9(11,12)" # pan 1
+
+xfadeIn 1 16 $ sound "pluck:5(9,16)" # pan 0
+
+xfadeIn 2 16 $ sound "pluck:8(10,16)" # pan 1
+
+xfadeIn 3 16 $ sound "drum:9(7,16)" # room 0.8
+
+hush
+
