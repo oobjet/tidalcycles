@@ -690,3 +690,55 @@ do
       # resonance (range 0 0.5 $ slow 12 $ sine)
       # pan "0.2 0.8"
       # gain (range 0 1 $ slow 9 $ sine)
+
+------------------
+-- antimatter 1 --
+------------------
+d1 $ every 3 (jux (rev)) $ slow 2 $ (striate' 16 0.3 $ s "metal") # speed "<0.8 0.4 0.2>"
+# pan 1
+
+d2 $ chunk 16 (# speed 2) $ s "eras" # delay "0.7 0.3 0.01" # pan 0
+
+d3 $ every 15 rolll $ chunk 16 (rev) $ every 4 (# speed 2) $ n "1 1 1*2 3*4" # s "eras" # cut 1
+
+d4 $ every 11 roll $ rev $ stut 3 0.2 0.125 $ stack ["noiz-00:3(2,8)", "noiz-00(3,8,1)", "noiz-00(4,6)"] #
+cut "2 1 0" # pan 0.3
+
+d1
+$ every 2 (iter 8)
+$ every 16 (degrade)
+$ chunk 4 (rev)
+$ jux (# speed (-1))
+$ every 4 (# delay 0.125)
+$ s "[noiz-00*3, noiz-00:1*4, [~ noiz-00:2]]"
+# pan (slow 4 $ range 0 1 sine)
+# lpf (slow 8 $ range 500 8000 rand)
+# cut 3
+
+-- miam
+d2 $ stut' "<3 4 6>" (0.125/2) (|*| speed "1 2 4 6") $ stack ["noiz-01:4(2,8)",
+"noiz-01(3,8,1)", "noiz-01:1(4,6)"] # cut (-1) # pan "{0 0.3 0.8}%4"
+
+d3
+  $ juxBy 0.5 (# vowel ("e u p a u p"))
+  $ stut' "<1 1 1 2 1 1 2 3>" ("0.125 0.5 0.25") (* speed "2 3 2 4")
+  $ rot "<0 0 1 1 0 0 1 3>"
+  $ n "[6 2 2 ~ ~ 2 ~ 6]*2"
+  # s "[dt1]"
+  # room "0.1"
+  # lpf 3000
+
+d4
+  $ juxBy 0.2 (density 2)
+  $ off 0.125 (+ (- 12))
+  $ up "{0 0 6 <11 12>}/2"
+  # s "airports"# cut 1
+  # gain 1.3
+  # pan "{0.3 0.1 0.6 0.9 0.5}%4"
+
+------------
+-- day 14 --
+------------
+sometimes a guitar and a delay are nicer than a keyboard and a screen...
+
+
